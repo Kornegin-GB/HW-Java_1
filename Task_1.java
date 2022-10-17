@@ -26,26 +26,44 @@ public class Task_1 {
       int[] nums6 = { 1 };
       n = 1;
       merge(nums5, m, nums6, n);
+
+      System.out.println();
+      int[] nums7 = { 2, 0 };
+      m = 1;
+      int[] nums8 = { 1 };
+      n = 1;
+      merge(nums7, m, nums8, n);
+
+      int[] nums9 = { 1, 2, 3, 0, 0, 0 };
+      m = 3;
+      int[] nums10 = { 4, 5, 6 };
+      n = 3;
+      merge(nums9, m, nums10, n);
    }
 
    public static void merge(int[] nums1, int m, int[] nums2, int n) {
-      int[] arr = nums1.clone();
-      int write = 0;
-      int i = 0;
-      int j = 0;
-      while (write < nums1.length) {
-         if (j < n) {
-            if (arr[i] <= nums2[j] && arr[i] != 0) {
-               nums1[write] = arr[i++];
-            } else {
-               nums1[write] = nums2[j++];
-            }
+      int write = m + n - 1;
+      int first = m - 1;
+      int second = n - 1;
+      while (write > 0 && second >= 0 && first >= 0) {
+         if (nums1[first] < nums2[second]) {
+            nums1[write--] = nums2[second--];
          } else {
-            nums1[write] = arr[i++];
+            nums1[write--] = nums1[first--];
          }
-         write++;
       }
-      Arrays.sort(nums1);
+      while (write > 0) {
+         if (second > 0) {
+            nums1[write--] = nums2[second--];
+         } else if (first > 0) {
+            nums1[write--] = nums1[first--];
+         }
+      }
+      if (second < 0) {
+         nums1[0] = nums1[0];
+      } else if (first < 0) {
+         nums1[0] = nums2[0];
+      }
       // Вывод
       System.out.println(Arrays.toString(nums1));
    }
