@@ -16,20 +16,28 @@ public class Task_3 {
    }
 
    public static boolean isPalindrome(String s) {
-      s = s.replaceAll("[^A-Za-z0-9]", "");
-      StringBuilder sb = new StringBuilder();
-      boolean palindrom = true;
-      for (int i = 0; i < s.length(); i++) {
-         sb.append(Character.toLowerCase(s.charAt(i)));
+      if (s.length() > Integer.MAX_VALUE) {
+         return false;
       }
-      System.out.println(sb.toString());
+      s = s.toLowerCase();
       int start = 0;
-      int end = sb.toString().length() - 1;
-      while (end > start) {
-         if (sb.toString().charAt(start++) != sb.toString().charAt(end--)) {
-            palindrom = false;
+      int end = s.length() - 1;
+      if (s.length() == 1) {
+         return true;
+      }
+      while (start < end) {
+         if (!Character.isLetterOrDigit(s.charAt(start))) {
+            start++;
+         } else if (!Character.isLetterOrDigit(s.charAt(end))) {
+            end--;
+         } else {
+            if (s.charAt(start) != s.charAt(end)) {
+               return false;
+            }
+            start++;
+            end--;
          }
       }
-      return palindrom;
+      return true;
    }
 }
