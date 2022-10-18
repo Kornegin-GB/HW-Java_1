@@ -9,39 +9,40 @@ public class Task_2 {
       System.out.println('"' + reverseWords(str) + '"');
 
       System.out.println();
-      str = "  hello world  ";
+      str = " hello world ";
       System.out.println('"' + reverseWords(str) + '"');
 
       System.out.println();
       str = "a good example";
       System.out.println('"' + reverseWords(str) + '"');
+
+      System.out.println();
+      str = "EPY2giL";
+      System.out.println('"' + reverseWords(str) + '"');
    }
 
    public static String reverseWords(String s) {
-      StringBuilder sp = new StringBuilder();
-      int j = 0, k = 0;
+      StringBuilder sb = new StringBuilder();
+      int start = 0;
+      int end = 0;
       for (int i = s.length() - 1; i >= 0; i--) {
-         // Подсчитываем количество пробелов в начале
-         while (i >= 0 && s.charAt(i) == ' ') {
-            i--;
+         if (Character.isLetterOrDigit(s.charAt(i)) && start >= end) {
+            end = i;
+            if (!sb.isEmpty()) {
+               sb.append(" ");
+            }
+         } else if (!Character.isLetterOrDigit(s.charAt(i)) && start < end) {
+            start = i + 1;
+            while (end >= start) {
+               sb.append(s.charAt(start++));
+            }
+            start = 0;
+            end = 0;
          }
-         j = i;
-         while (i >= 0 && s.charAt(i) != ' ') {
-            i--;
-         }
-         k = i + 1;
-         while (k <= j) {
-            sp.append(s.charAt(k));
-            k++;
-         }
-         // Подсчитываем количество пробелов в конце
-         while (i >= 0 && s.charAt(i) == ' ') {
-            i--;
-         }
-         if (i != -1)
-            sp.append(' ');
-         i += 1;
       }
-      return sp.toString();
+      while (start <= end && Character.isLetterOrDigit(s.charAt(start))) {
+         sb.append(s.charAt(start++));
+      }
+      return sb.toString();
    }
 }
